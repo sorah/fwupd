@@ -697,7 +697,7 @@ fu_raydium_tp_hid_device_bl_dma_crc(FuRaydiumTpHidDevice *self,
 		return FALSE;
 	if (!fu_raydium_tp_hid_device_set_bl_mem(self,
 						 FU_RAYDIUM_TP_FLASH_CTRL_DMA_EADDR,
-						 base_addr + img_length - RAYDIUM_CRC_LEN,
+						 base_addr + img_length,
 						 8,
 						 error))
 		return FALSE;
