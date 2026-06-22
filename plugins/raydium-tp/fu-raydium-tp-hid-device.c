@@ -170,6 +170,15 @@ fu_raydium_tp_hid_device_bl_read(FuRaydiumTpHidDevice *self,
 	g_autoptr(GByteArray) inbuf = NULL;
 	g_autoptr(FuStructRaydiumTpHidPacket) st = fu_struct_raydium_tp_hid_packet_new();
 
+	if (rcv_bufsz < 6) {
+		g_set_error(error,
+			    FWUPD_ERROR,
+			    FWUPD_ERROR_INVALID_DATA,
+			    "receive buffer size %" G_GSIZE_FORMAT " too small, expected >= 6",
+			    rcv_bufsz);
+		return FALSE;
+	}
+
 	if (rcv_buf[1] == 0xFF) {
 		wait_idle_flag = 1;
 		rcv_buf[1] = 0x00;
