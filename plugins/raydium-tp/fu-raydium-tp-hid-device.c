@@ -119,6 +119,15 @@ fu_raydium_tp_hid_device_bl_write(FuRaydiumTpHidDevice *self,
 	g_autoptr(FuStructRaydiumTpHidPacket) st1 = fu_struct_raydium_tp_hid_packet_new();
 	g_autoptr(FuStructRaydiumTpHidPacket) st2 = fu_struct_raydium_tp_hid_packet_new();
 
+	if (bufsz < 6) {
+		g_set_error(error,
+			    FWUPD_ERROR,
+			    FWUPD_ERROR_INVALID_DATA,
+			    "buffer size %" G_GSIZE_FORMAT " too small, expected >= 6",
+			    bufsz);
+		return FALSE;
+	}
+
 	fu_struct_raydium_tp_hid_packet_set_header3(st1, FU_RAYDIUM_TP_HID_DATA_HEADER3_WR);
 	fu_struct_raydium_tp_hid_packet_set_header4(st1, FU_RAYDIUM_TP_HID_DATA_HEADER4_WR);
 	fu_struct_raydium_tp_hid_packet_set_data0(st1, FU_RAYDIUM_TP_CMD2_WRT);
